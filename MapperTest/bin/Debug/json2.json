@@ -1,0 +1,54 @@
+{
+  "mappings": [
+    {
+      "targetFieldName": "Title",
+      "sourceFieldName": "Title",
+      "basic": {
+        "value": "TitleTest"
+      }
+    },
+    {
+      "targetFieldName": "Area",
+      "sourceFieldName": "Area",
+      "hook": { "methodName": "AssignArea" }
+    },
+    {
+      "targetFieldName": "Assignee",
+      "sourceFieldName": "Prop1",
+      "ref": {
+        "type": "System.String"
+
+      }
+    },
+    {
+      "targetFieldName": "Address",
+      "sourceFieldName": "Address.Address1",
+      "ref": {
+        "type": "System.String"
+
+      }
+    },
+    {
+      "sourceFieldName": "DateAdded",
+      "targetFieldName": "DueDate",
+      "offset": {
+        "type": "System.DateTime",
+        "value": 28
+      }
+    },
+
+    {
+      "targetFieldName": "Comments",
+      "hook": {
+        "methodName": "AssignDescription",
+        "sourceFieldName": "User",
+        "ref": {
+          "type": "System.String"
+        }
+      }
+
+    }
+
+  ]
+
+}

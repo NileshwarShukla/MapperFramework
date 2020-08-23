@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TestDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="EmployeeIs" />
+    </Key>
+    <Property Name="EmployeeIs" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FName" Type="varchar" MaxLength="10" />
+    <Property Name="LName" Type="nchar" MaxLength="10" />
+    <Property Name="DateStarted" Type="datetime" />
+    <Property Name="DateEnded" Type="datetime" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6013: The table/view 'TestDb.dbo.EmployeeOffice' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="EmployeeOffice">
+          <Property Name="EmployeeRefrenceId" Type="int" />
+          <Property Name="OfficeRefrenceId" Type="int" />
+          <Property Name="ManagerRefrenceId" Type="int" />
+        </EntityType>-->
+  <EntityType Name="Office">
+    <Key>
+      <PropertyRef Name="OfficeId" />
+    </Key>
+    <Property Name="OfficeLocation" Type="nvarchar" MaxLength="50" />
+    <Property Name="OfficeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OfficeOpened" Type="datetime" />
+    <Property Name="OfficeClosed" Type="datetime" />
+  </EntityType>
+  <Association Name="FK_Employee_Employee">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+    <End Role="Employee1" Type="Self.Employee" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="EmployeeIs" />
+      </Principal>
+      <Dependent Role="Employee1">
+        <PropertyRef Name="EmployeeIs" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <!--Errors Found During Generation:
+error 6004: The table 'TestDb.dbo.EmployeeOffice' is referenced by a relationship, but cannot be found.
+        <Association Name="FK_EmployeeOffice_Employee" />-->
+  <!--Errors Found During Generation:
+error 6004: The table 'TestDb.dbo.EmployeeOffice' is referenced by a relationship, but cannot be found.
+        <Association Name="FK_EmployeeOffice_Office" />-->
+  <EntityContainer Name="TestDbModelStoreContainer">
+    <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Office" EntityType="Self.Office" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Employee_Employee" Association="Self.FK_Employee_Employee">
+      <End Role="Employee" EntitySet="Employee" />
+      <End Role="Employee1" EntitySet="Employee" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
